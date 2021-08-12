@@ -42,3 +42,6 @@ For more information about panels, refer to the documentation on [Panels](https:
 - [Grafana documentation](https://grafana.com/docs/)
 - [Grafana Tutorials](https://grafana.com/tutorials/) - Grafana Tutorials are step-by-step guides that help you make the most of Grafana
 - [Grafana UI Library](https://developers.grafana.com/ui) - UI components to help you build interfaces using Grafana Design System
+
+
+eyJrIjoiMzI3OWE1MTkzMzA4YjAzODY4YzkyZDY4M2ZhNWIwYzU1ODE2ZmU0MiIsIm4iOiJlYVRvbmciLCJpZCI6NTMwNDkzfQ==
