@@ -24,6 +24,7 @@ export interface BizOptions {
     showAsPie: boolean;
     labelOffset: number;
     innerRadius: number;
+    autoGroup: boolean;
   };
   point: {
     color: string;

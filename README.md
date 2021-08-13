@@ -44,4 +44,4 @@ For more information about panels, refer to the documentation on [Panels](https:
 - [Grafana UI Library](https://developers.grafana.com/ui) - UI components to help you build interfaces using Grafana Design System
 
 
-eyJrIjoiMzI3OWE1MTkzMzA4YjAzODY4YzkyZDY4M2ZhNWIwYzU1ODE2ZmU0MiIsIm4iOiJlYVRvbmciLCJpZCI6NTMwNDkzfQ==
+export GRAFANA_API_KEY=eyJrIjoiMzI3OWE1MTkzMzA4YjAzODY4YzkyZDY4M2ZhNWIwYzU1ODE2ZmU0MiIsIm4iOiJlYVRvbmciLCJpZCI6NTMwNDkzfQ==
