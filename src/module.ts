@@ -6,6 +6,32 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
   // 添加折线图配置
   builder
     .addBooleanSwitch({
+      path: 'showLegend',
+      name: '显示图例',
+      defaultValue: true,
+    })
+    .addSelect({
+      path: 'legendPosition',
+      name: '图例位置',
+      defaultValue: 'bottom',
+      settings: {
+        options:[
+          {label:'左' , value:'left'},
+          {label:'左上' , value:'left-top'},
+          {label:'左下' , value:'left-bottom'},
+          {label:'右' , value:'right'},
+          {label:'右上' , value:'right-top'},
+          {label:'右下' , value:'right-bottom'},
+          {label:'上' , value:'top'},
+          {label:'上左' , value:'top-left'},
+          {label:'上右' , value:'top-right'},
+          {label:'下' , value:'bottom'},
+          {label:'下左' , value:'bottom-left'},
+          {label:'下右' , value:'bottom-right'},
+        ]
+      }
+    })
+    .addBooleanSwitch({
       path: 'showLine',
       name: '显示折线图',
       defaultValue: true,
@@ -18,7 +44,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     })
     .addSelect({
       path: 'line.xField',
-      name: 'X轴字段',
+      name: '纬度字段',
       defaultValue: 'metric',
       settings: {
         allowCustomValue: true,
@@ -29,7 +55,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     })
     .addSelect({
       path: 'line.yField',
-      name: 'Y轴字段',
+      name: '指标字段',
       defaultValue: 'value',
       settings: {
         allowCustomValue: true,
@@ -52,7 +78,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     .addSelect({
       path: 'line.shape',
       name: '显示类型',
-      defaultValue: 'circle',
+      defaultValue: 'line',
       settings: {
         allowCustomValue: true,
         options: getShapeOptions('line'),
@@ -65,23 +91,31 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     .addBooleanSwitch({
       path: 'showInterval',
       name: '显示柱状图',
-      defaultValue: false,
+      defaultValue: false
     })
     .addColorPicker({
       path: 'interval.color',
       name: '柱状图颜色',
       defaultValue: '',
-      showIf: (opts: BizOptions) => opts.showInterval,
+      showIf: (opts: BizOptions) => opts.showInterval && !opts.interval.autoGroup,
     })
     .addBooleanSwitch({
       path: 'interval.showAsPie',
       name: '显示为饼图',
       defaultValue: false,
+      showIf: (opts: BizOptions) => opts.showInterval && !opts.interval.showAsRow,
+    })
+    .addBooleanSwitch({
+      path: 'interval.showAsRow',
+      name: '显示为条形图',
+      defaultValue: false,
+      showIf: (opts: BizOptions) => opts.showInterval && !opts.interval.showAsPie,
     })
     .addBooleanSwitch({
       path: 'interval.autoGroup',
       name: '自动聚合数据',
       defaultValue: false,
+      showIf: (opts: BizOptions) => opts.showInterval,
     })
     .addNumberInput({
       path: 'interval.innerRadius',
@@ -110,7 +144,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     })
     .addSelect({
       path: 'interval.xField',
-      name: '柱状图X轴字段',
+      name: '柱状图纬度字段',
       defaultValue: 'metric',
       settings: {
         allowCustomValue: true,
@@ -121,7 +155,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     })
     .addSelect({
       path: 'interval.yField',
-      name: '柱状图Y轴字段',
+      name: '柱状图指标字段',
       defaultValue: 'value',
       settings: {
         allowCustomValue: true,
@@ -139,7 +173,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
         options: [],
         getOptions: (context: FieldOverrideContext) => getFieldsOptions(context, true),
       },
-      showIf: (opts: BizOptions) => opts.showInterval,
+      showIf: (opts: BizOptions) => opts.showInterval && opts.interval.autoGroup,
     })
     .addSelect({
       path: 'interval.drillDown',
@@ -155,14 +189,13 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     .addSelect({
       path: 'interval.shape',
       name: '柱状图显示类型',
-      defaultValue: 'circle',
+      defaultValue: 'rect',
       settings: {
         allowCustomValue: true,
         options: getShapeOptions('interval'),
       },
       showIf: (opts: BizOptions) => opts.showInterval,
     });
-
   // 添加点图配置
   builder
     .addBooleanSwitch({
@@ -178,7 +211,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     })
     .addSelect({
       path: 'point.xField',
-      name: '点图X轴字段',
+      name: '点图纬度字段',
       defaultValue: 'metric',
       settings: {
         allowCustomValue: true,
@@ -189,7 +222,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     })
     .addSelect({
       path: 'point.yField',
-      name: '点图Y轴字段',
+      name: '点图指标字段',
       defaultValue: 'value',
       settings: {
         allowCustomValue: true,
@@ -235,7 +268,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     })
     .addSelect({
       path: 'area.xField',
-      name: '区域图X轴字段',
+      name: '区域图纬度字段',
       defaultValue: 'metric',
       settings: {
         allowCustomValue: true,
@@ -246,7 +279,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     })
     .addSelect({
       path: 'area.yField',
-      name: '区域图Y轴字段',
+      name: '区域图指标字段',
       defaultValue: 'value',
       settings: {
         allowCustomValue: true,
@@ -269,7 +302,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     .addSelect({
       path: 'area.shape',
       name: '区域图显示类型',
-      defaultValue: 'circle',
+      defaultValue: 'area',
       settings: {
         allowCustomValue: true,
         options: getShapeOptions('area'),

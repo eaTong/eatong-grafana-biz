@@ -2,7 +2,7 @@ import React from 'react';
 import {PanelData, PanelProps} from '@grafana/data';
 import {BizOptions} from 'types';
 import {css, cx} from 'emotion';
-import {Chart, Interval, LineAdvance, Point, Area, Coordinate} from 'bizcharts';
+import {Chart, Interval, LineAdvance, Point, Area, Coordinate, useTheme, Legend} from 'bizcharts';
 import {stylesFactory} from '@grafana/ui';
 import {getLocationSrv} from '@grafana/runtime';
 import {IIntervalGemoProps} from 'bizcharts/lib/geometry/Interval';
@@ -73,7 +73,7 @@ export const BizPanel: React.FC<Props> = ({options, data, width, height}) => {
         : `${options.interval.xField}*${options.interval.yField}`,
       color: options.interval.showAsPie
         ? options.interval.xField
-        : options.interval.groupField || options.interval.color,
+        : (options.interval.autoGroup ? options.interval.groupField : options.interval.color),
     };
     if (options.interval.showAsPie) {
       intervalOptions.adjust = 'stack';
@@ -87,6 +87,7 @@ export const BizPanel: React.FC<Props> = ({options, data, width, height}) => {
     return intervalOptions;
   }
 
+  const [theme] = useTheme('light');
   return (
     <div
       className={cx(
@@ -98,11 +99,14 @@ export const BizPanel: React.FC<Props> = ({options, data, width, height}) => {
       )}
     >
       <Chart
+        theme={theme}
         height={height}
         width={width}
         data={getData(data, options)}
         onClick={(event: MouseEvent) => onClickPanel(event, options)}
+        padding={options.interval.showAsPie ? options.interval.labelOffset : 40}
       >
+        <Legend visible={options.showLegend} position={options.legendPosition}/>
         {options.showLine && (
           <LineAdvance
             position={`${options.line.xField}*${options.line.yField}`}
@@ -113,6 +117,7 @@ export const BizPanel: React.FC<Props> = ({options, data, width, height}) => {
         {options.showInterval && (
           <>
             {options.interval.showAsPie && <Coordinate type="theta" innerRadius={options.interval.innerRadius}/>}
+            {options.interval.showAsRow && <Coordinate transpose/>}
             <Interval {...getIntervalOptions()} />
           </>
         )}

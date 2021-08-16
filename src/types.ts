@@ -1,7 +1,24 @@
 // type SeriesSize = 'sm' | 'md' | 'lg';
 // export type GeomType = 'point' | 'path' | 'line' | 'area' | 'interval' | 'polygon' | 'edge' | 'schema' | 'heatmap' | 'pointStack' | 'pointJitter' | 'pointDodge' | 'intervalStack' | 'intervalDodge' | 'intervalSymmetric' | 'lineStack' | 'areaStack' | 'schemaDodge';
+// import {LengendOptions} from 'bizcharts/lib/plots/core/interface';
+type LegendPosition =
+  "top"
+  | "top-left"
+  | "top-right"
+  | "right"
+  | "right-top"
+  | "right-bottom"
+  | "left"
+  | "left-top"
+  | "left-bottom"
+  | "bottom"
+  | "bottom-left"
+  | "bottom-right"
+  | undefined;
 
 export interface BizOptions {
+  showLegend: boolean;
+  legendPosition: LegendPosition;
   showLine: boolean;
   showPoint: boolean;
   showArea: boolean;
@@ -22,6 +39,7 @@ export interface BizOptions {
     groupField: string;
     drillDown: string;
     showAsPie: boolean;
+    showAsRow: boolean;
     labelOffset: number;
     innerRadius: number;
     autoGroup: boolean;
