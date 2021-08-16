@@ -1,6 +1,6 @@
-import {FieldOverrideContext, getFieldDisplayName, PanelPlugin} from '@grafana/data';
-import {BizOptions} from './types';
-import {BizPanel} from './BizPanel';
+import { FieldOverrideContext, getFieldDisplayName, PanelPlugin } from '@grafana/data';
+import { BizOptions } from './types';
+import { BizPanel } from './BizPanel';
 
 export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(builder => {
   // 添加折线图配置
@@ -15,21 +15,21 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
       name: '图例位置',
       defaultValue: 'bottom',
       settings: {
-        options:[
-          {label:'左' , value:'left'},
-          {label:'左上' , value:'left-top'},
-          {label:'左下' , value:'left-bottom'},
-          {label:'右' , value:'right'},
-          {label:'右上' , value:'right-top'},
-          {label:'右下' , value:'right-bottom'},
-          {label:'上' , value:'top'},
-          {label:'上左' , value:'top-left'},
-          {label:'上右' , value:'top-right'},
-          {label:'下' , value:'bottom'},
-          {label:'下左' , value:'bottom-left'},
-          {label:'下右' , value:'bottom-right'},
-        ]
-      }
+        options: [
+          { label: '左', value: 'left' },
+          { label: '左上', value: 'left-top' },
+          { label: '左下', value: 'left-bottom' },
+          { label: '右', value: 'right' },
+          { label: '右上', value: 'right-top' },
+          { label: '右下', value: 'right-bottom' },
+          { label: '上', value: 'top' },
+          { label: '上左', value: 'top-left' },
+          { label: '上右', value: 'top-right' },
+          { label: '下', value: 'bottom' },
+          { label: '下左', value: 'bottom-left' },
+          { label: '下右', value: 'bottom-right' },
+        ],
+      },
     })
     .addBooleanSwitch({
       path: 'showLine',
@@ -91,7 +91,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
     .addBooleanSwitch({
       path: 'showInterval',
       name: '显示柱状图',
-      defaultValue: false
+      defaultValue: false,
     })
     .addColorPicker({
       path: 'interval.color',
@@ -315,49 +315,49 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
 
 function getShapeOptions(optionType: string) {
   const pointOptions = [
-    {label: 'circle', value: 'circle'},
-    {label: 'square', value: 'square'},
-    {label: 'bowtie', value: 'bowtie'},
-    {label: 'diamond', value: 'diamond'},
-    {label: 'hexagon', value: 'hexagon'},
-    {label: 'triangle', value: 'triangle'},
-    {label: 'triangle-down', value: 'triangle-down'},
-    {label: 'hollowCircle', value: 'hollowCircle'},
-    {label: 'hollowSquare', value: 'hollowSquare'},
-    {label: 'hollowBowtie', value: 'hollowBowtie'},
-    {label: 'hollowDiamond', value: 'hollowDiamond'},
-    {label: 'hollowTriangle', value: 'hollowTriangle'},
-    {label: 'hollowTriangle-down', value: 'hollowTriangle-down'},
-    {label: 'cross', value: 'cross'},
-    {label: 'tick', value: 'tick'},
-    {label: 'plus', value: 'plus'},
-    {label: 'hyphen', value: 'hyphen'},
+    { label: 'circle', value: 'circle' },
+    { label: 'square', value: 'square' },
+    { label: 'bowtie', value: 'bowtie' },
+    { label: 'diamond', value: 'diamond' },
+    { label: 'hexagon', value: 'hexagon' },
+    { label: 'triangle', value: 'triangle' },
+    { label: 'triangle-down', value: 'triangle-down' },
+    { label: 'hollowCircle', value: 'hollowCircle' },
+    { label: 'hollowSquare', value: 'hollowSquare' },
+    { label: 'hollowBowtie', value: 'hollowBowtie' },
+    { label: 'hollowDiamond', value: 'hollowDiamond' },
+    { label: 'hollowTriangle', value: 'hollowTriangle' },
+    { label: 'hollowTriangle-down', value: 'hollowTriangle-down' },
+    { label: 'cross', value: 'cross' },
+    { label: 'tick', value: 'tick' },
+    { label: 'plus', value: 'plus' },
+    { label: 'hyphen', value: 'hyphen' },
   ];
   const lineOptions = [
-    {label: 'line', value: 'line'},
-    {label: 'dot', value: 'dot'},
-    {label: 'dash', value: 'dash'},
-    {label: 'smooth', value: 'smooth'},
-    {label: 'hv', value: 'hv'},
-    {label: 'vh', value: 'vh'},
-    {label: 'hvh', value: 'hvh'},
-    {label: 'vhv', value: 'vhv'},
-    {label: 'hv', value: 'hv'},
-    {label: 'hvh', value: 'hvh'},
+    { label: 'line', value: 'line' },
+    { label: 'dot', value: 'dot' },
+    { label: 'dash', value: 'dash' },
+    { label: 'smooth', value: 'smooth' },
+    { label: 'hv', value: 'hv' },
+    { label: 'vh', value: 'vh' },
+    { label: 'hvh', value: 'hvh' },
+    { label: 'vhv', value: 'vhv' },
+    { label: 'hv', value: 'hv' },
+    { label: 'hvh', value: 'hvh' },
   ];
   const areaOptions = [
-    {label: 'area', value: 'area'},
-    {label: 'smooth', value: 'smooth'},
-    {label: 'line', value: 'line'},
-    {label: 'smooth-line', value: 'smooth-line'},
+    { label: 'area', value: 'area' },
+    { label: 'smooth', value: 'smooth' },
+    { label: 'line', value: 'line' },
+    { label: 'smooth-line', value: 'smooth-line' },
   ];
   const intervalOptions = [
-    {label: 'rect', value: 'rect'},
-    {label: 'hollow-rect', value: 'hollow-rect'},
-    {label: 'line', value: 'line'},
-    {label: 'tick', value: 'tick'},
-    {label: 'funnel', value: 'funnel'},
-    {label: 'pyramid', value: 'pyramid'},
+    { label: 'rect', value: 'rect' },
+    { label: 'hollow-rect', value: 'hollow-rect' },
+    { label: 'line', value: 'line' },
+    { label: 'tick', value: 'tick' },
+    { label: 'funnel', value: 'funnel' },
+    { label: 'pyramid', value: 'pyramid' },
   ];
   if (optionType === 'point') {
     return pointOptions;
@@ -373,16 +373,16 @@ function getShapeOptions(optionType: string) {
 
 async function getFieldsOptions(context: FieldOverrideContext, enableNull?: boolean) {
   console.log(context);
-  const options = enableNull ? [{value: '', label: '置空'}] : [];
+  const options = enableNull ? [{ value: '', label: '置空' }] : [];
   if (context.options.interval.autoGroup) {
-    options.push({value: 'bizGroupField', label: '自动聚合字段'});
+    options.push({ value: 'bizGroupField', label: '自动聚合字段' });
   }
   if (context && context.data) {
     for (const frame of context.data) {
       for (const field of frame.fields) {
         const name = getFieldDisplayName(field, frame, context.data);
         // const value = `/^${escapeStringForRegex(name)}$/`;
-        options.push({value: name, label: name});
+        options.push({ value: name, label: name });
       }
     }
   }
