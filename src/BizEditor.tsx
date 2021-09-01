@@ -5,5 +5,5 @@ import { BizConfig } from './types';
 
 export const BizEditor: React.FC<StandardEditorProps<BizConfig>> = props => {
   // const {value , onChange } = props;
-  return <div></div>;
+  return <div>{JSON.stringify(props)}</div>;
 };

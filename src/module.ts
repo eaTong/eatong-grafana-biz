@@ -3,7 +3,7 @@ import { BizOptions } from './types';
 import { BizPanel } from './BizPanel';
 
 export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(builder => {
-  // 添加折线图配置
+  // 添加基本配置
   builder
     .addBooleanSwitch({
       path: 'showLegend',
@@ -30,7 +30,45 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
           { label: '下右', value: 'bottom-right' },
         ],
       },
+      showIf: opts => opts.showLegend,
     })
+    .addBooleanSwitch({
+      path: 'autoGroup',
+      name: '自动聚合数据',
+      defaultValue: false,
+    })
+    .addSelect({
+      path: 'drillDown',
+      name: '下钻字段',
+      defaultValue: '',
+      settings: {
+        allowCustomValue: true,
+        options: [],
+        getOptions: (context: FieldOverrideContext) => getFieldsOptions(context, true),
+      },
+    })
+    .addNumberInput({
+      path: 'leftPadding',
+      name: '左边框',
+      defaultValue: 20,
+    })
+    .addNumberInput({
+      path: 'topPadding',
+      name: '上边框',
+      defaultValue: 20,
+    })
+    .addNumberInput({
+      path: 'rightPadding',
+      name: '右边框',
+      defaultValue: 20,
+    })
+    .addNumberInput({
+      path: 'bottomPadding',
+      name: '下边框',
+      defaultValue: 20,
+    });
+  // 添加折线图配置
+  builder
     .addBooleanSwitch({
       path: 'showLine',
       name: '显示折线图',
@@ -40,7 +78,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
       path: 'line.color',
       name: '颜色',
       defaultValue: '',
-      showIf: opts => opts.showLine,
+      showIf: opts => opts.showLine && !opts.autoGroup,
     })
     .addSelect({
       path: 'line.xField',
@@ -97,7 +135,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
       path: 'interval.color',
       name: '柱状图颜色',
       defaultValue: '',
-      showIf: (opts: BizOptions) => opts.showInterval && !opts.interval.autoGroup,
+      showIf: (opts: BizOptions) => opts.showInterval && !opts.autoGroup,
     })
     .addBooleanSwitch({
       path: 'interval.showAsPie',
@@ -110,12 +148,6 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
       name: '显示为条形图',
       defaultValue: false,
       showIf: (opts: BizOptions) => opts.showInterval && !opts.interval.showAsPie,
-    })
-    .addBooleanSwitch({
-      path: 'interval.autoGroup',
-      name: '自动聚合数据',
-      defaultValue: false,
-      showIf: (opts: BizOptions) => opts.showInterval,
     })
     .addNumberInput({
       path: 'interval.innerRadius',
@@ -173,18 +205,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
         options: [],
         getOptions: (context: FieldOverrideContext) => getFieldsOptions(context, true),
       },
-      showIf: (opts: BizOptions) => opts.showInterval && opts.interval.autoGroup,
-    })
-    .addSelect({
-      path: 'interval.drillDown',
-      name: '柱状图下钻字段',
-      defaultValue: '',
-      settings: {
-        allowCustomValue: true,
-        options: [],
-        getOptions: (context: FieldOverrideContext) => getFieldsOptions(context, true),
-      },
-      showIf: (opts: BizOptions) => opts.showInterval,
+      showIf: (opts: BizOptions) => opts.showInterval && opts.autoGroup,
     })
     .addSelect({
       path: 'interval.shape',
@@ -207,7 +228,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
       path: 'point.color',
       name: '点图颜色',
       defaultValue: '',
-      showIf: (opts: BizOptions) => opts.showPoint,
+      showIf: (opts: BizOptions) => opts.showPoint && !opts.autoGroup,
     })
     .addSelect({
       path: 'point.xField',
@@ -264,7 +285,7 @@ export const plugin = new PanelPlugin<BizOptions>(BizPanel).setPanelOptions(buil
       path: 'area.color',
       name: '区域图颜色',
       defaultValue: '',
-      showIf: (opts: BizOptions) => opts.showArea,
+      showIf: (opts: BizOptions) => opts.showArea && !opts.autoGroup,
     })
     .addSelect({
       path: 'area.xField',
@@ -372,9 +393,8 @@ function getShapeOptions(optionType: string) {
 }
 
 async function getFieldsOptions(context: FieldOverrideContext, enableNull?: boolean) {
-  console.log(context);
   const options = enableNull ? [{ value: '', label: '置空' }] : [];
-  if (context.options.interval.autoGroup) {
+  if (context.options.autoGroup) {
     options.push({ value: 'bizGroupField', label: '自动聚合字段' });
   }
   if (context && context.data) {

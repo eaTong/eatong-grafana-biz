@@ -30,7 +30,7 @@ function getData(data: PanelData, options: BizOptions) {
       resultData.push(resultMapping);
     }
   }
-  if (options.interval.autoGroup) {
+  if (options.autoGroup) {
     const { DataView } = DataSet;
     const dv = new DataView();
     dv.source(resultData).transform({
@@ -49,10 +49,10 @@ function getData(data: PanelData, options: BizOptions) {
 function onClickPanel(event: any, options: BizOptions) {
   if (event.data?.data) {
     const originData = event.data.data;
-    if (options.interval.drillDown) {
+    if (options.drillDown) {
       getLocationSrv().update({
         query: {
-          'var-service': originData[options.interval.drillDown],
+          'var-drill': originData[options.drillDown],
         },
         partial: true,
         replace: true,
@@ -71,7 +71,7 @@ export const BizPanel: React.FC<Props> = ({ options, data, width, height }) => {
         : `${options.interval.xField}*${options.interval.yField}`,
       color: options.interval.showAsPie
         ? options.interval.xField
-        : options.interval.autoGroup
+        : options.autoGroup
         ? options.interval.groupField
         : options.interval.color,
     };
@@ -104,7 +104,8 @@ export const BizPanel: React.FC<Props> = ({ options, data, width, height }) => {
         width={width}
         data={getData(data, options)}
         onClick={(event: MouseEvent) => onClickPanel(event, options)}
-        padding={options.interval.showAsPie ? options.interval.labelOffset : 40}
+        padding={'auto'}
+        appendPadding={[options.topPadding, options.rightPadding, options.bottomPadding, options.leftPadding]}
       >
         <Legend visible={options.showLegend} position={options.legendPosition} />
         {options.showLine && (

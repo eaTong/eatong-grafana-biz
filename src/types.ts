@@ -23,6 +23,12 @@ export interface BizOptions {
   showPoint: boolean;
   showArea: boolean;
   showInterval: boolean;
+  leftPadding: number;
+  topPadding: number;
+  bottomPadding: number;
+  rightPadding: number;
+  drillDown: string;
+  autoGroup: boolean;
   line: {
     color: string;
     xField: string;
@@ -37,12 +43,10 @@ export interface BizOptions {
     yField: string;
     shape: string;
     groupField: string;
-    drillDown: string;
     showAsPie: boolean;
     showAsRow: boolean;
     labelOffset: number;
     innerRadius: number;
-    autoGroup: boolean;
   };
   point: {
     color: string;

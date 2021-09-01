@@ -45,3 +45,4 @@ For more information about panels, refer to the documentation on [Panels](https:
 
 
 export GRAFANA_API_KEY=eyJrIjoiMzI3OWE1MTkzMzA4YjAzODY4YzkyZDY4M2ZhNWIwYzU1ODE2ZmU0MiIsIm4iOiJlYVRvbmciLCJpZCI6NTMwNDkzfQ==
+npx @grafana/toolkit plugin:sign --rootUrls http://beta.yunzhizhuang.com:3000,http://47.92.220.207:3000,http://localhost:3000
